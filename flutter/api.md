@@ -8,6 +8,39 @@
 - 비동기 작업의 결과를 나타내는 객체
 - 작업이 완료되면 값을 반환
 
+# 그러면 비동기 통신을 진짜 하는 이유는 무엇인가?
+1. 가독성
+2. 에러처리의 간소화
+3. 순차적 실행 보장
+4. 앱의 반응성 유지
+5. 코드 작성 및 디버깅 용이
+
+```dart
+// async/await 사용
+Future<void> getUserData() async {
+  try {
+    String userId = await fetchUserId();
+    String userName = await fetchUserName(userId);
+    print('사용자 이름: $userName');
+  } catch (e) {
+    print('에러 발생: $e');
+  }
+}
+
+// async/await 없이 사용 - 가독성이 낮고 문제 발생시 파악하기 어려움.
+void getUserDataWithoutAsync() {
+  fetchUserId().then((userId) {
+    fetchUserName(userId).then((userName) {
+      print('사용자 이름: $userName');
+    }).catchError((e) {
+      print('에러 발생: $e');
+    });
+  }).catchError((e) {
+    print('에러 발생: $e');
+  });
+}
+```
+
 ### Example
 ```dart
 // Future<dynamic> : 비동기 작업 결과 객체가 dynamic이다.
